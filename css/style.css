@@ -1248,17 +1248,89 @@ section:not(.hero):not(.welcome-strip) {
 @media (max-width: 991px) {
     .hero { height: 50vh; }
     .hero-overlay { padding: 60px 0; }
+
+    /* Treat many tablets/large phones same as mobile: show only brand + toggler over hero */
+    .navbar-custom {
+        position: absolute;
+        top: 12px;
+        left: 0;
+        right: 0;
+        background: transparent;
+        box-shadow: none;
+        padding: 8px 16px;
+        z-index: 1100;
+    }
+    .navbar-custom .navbar-collapse { display: none !important; }
+    .navbar-custom .navbar-brand { position: absolute; left: 14px; top: 8px; z-index: 1110; }
+    .navbar-custom .navbar-toggler { position: absolute; right: 14px; top: 8px; z-index: 1110; border: none; background: transparent; }
+    .navbar-custom .navbar-toggler .fa-bars { color: #fff; font-size: 1.2rem; }
+
+    /* When menu expanded, show a full-screen overlay nav for clarity */
+    .collapse.show { display: block !important; background: rgba(0,0,0,0.88); position: fixed; inset: 0; padding-top: 80px; z-index: 1105; overflow-y: auto; }
+    .collapse.show .nav-links { flex-direction: column; gap: 18px; padding: 24px; align-items: center; }
+
+    /* Reduce hero title font size to avoid overlap with logo and toggler */
+    .hero-title { font-size: 1.8rem; line-height: 1.08; }
+
+    /* Hide the small hero badge on small screens to reduce clutter */
+    .hero-badge { display: none !important; }
 }
 
 @media (max-width: 575px) {
+    /* Compact hero sizing on small devices */
     .hero { height: 40vh; }
     .hero-overlay { padding: 28px 0; }
-  .mobile-cta { bottom: 14px; width: calc(100% - 40px); left: 50%; transform: translateX(-50%); }
-  .hero-title { font-size: 1.6rem; }
 
-    /* Hide small decorative badge on mobile to preserve space */
+    .mobile-cta { bottom: 14px; width: calc(100% - 40px); left: 50%; transform: translateX(-50%); }
+
+    /* Mobile navbar: overlay on hero, show only brand + toggler on top */
+    .navbar-custom {
+        position: absolute;
+        top: 12px;
+        left: 0;
+        right: 0;
+        background: transparent;
+        box-shadow: none;
+        padding: 8px 16px;
+        z-index: 1100;
+    }
+    .navbar-custom .navbar-collapse { display: none !important; }
+    .navbar-custom .navbar-brand { position: absolute; left: 14px; top: 8px; z-index: 1110; }
+    .navbar-custom .navbar-toggler { position: absolute; right: 14px; top: 8px; z-index: 1110; border: none; background: transparent; }
+    .navbar-custom .navbar-toggler .fa-bars { color: #fff; font-size: 1.2rem; }
+
+    /* When menu expanded, show a full-screen overlay nav for clarity */
+    .collapse.show { display: block !important; background: rgba(0,0,0,0.88); position: fixed; inset: 0; padding-top: 80px; z-index: 1105; overflow-y: auto; }
+    .collapse.show .nav-links { flex-direction: column; gap: 18px; padding: 24px; align-items: center; }
+
+    /* Reduce hero title font size to avoid overlap with logo and toggler */
+    .hero-title { font-size: 1.6rem; line-height: 1.1; }
+
+    /* Hide the small hero badge on mobile to reduce clutter */
     .hero-badge { display: none !important; }
-
-/* Responsive hero title sizing */
-.hero-title { font-size: clamp(1.6rem, 2.4vw + 1rem, 2.4rem); }
 }
+
+/* Remove visible top navbar on desktop as requested:
+   Show only the brand (left) and hamburger (right) over the hero for all viewports.
+   The expanded menu uses the full-screen overlay already defined above. */
+.navbar-custom {
+    position: absolute !important;
+    top: 12px !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 8px 16px !important;
+    z-index: 1100 !important;
+}
+.navbar-custom .navbar-collapse { display: none !important; }
+.navbar-custom .navbar-brand { position: absolute; left: 18px; top: 8px; z-index: 1110; }
+.navbar-custom .navbar-toggler { position: absolute; right: 18px; top: 8px; z-index: 1110; border: none; background: transparent; }
+.navbar-custom .navbar-toggler .fa-bars { color: #fff; font-size: 1.2rem; }
+
+/* Reduce hero title slightly across sizes to avoid overlap */
+.hero-title { font-size: clamp(1.6rem, 2.8vw + 1rem, 2.0rem); }
+
+/* Ensure the collapse overlay remains usable when opened on desktop */
+.collapse.show { display: block !important; background: rgba(0,0,0,0.88) !important; position: fixed !important; inset: 0 !important; padding-top: 80px !important; z-index: 1105 !important; overflow-y: auto !important; }
+.collapse.show .nav-links { flex-direction: column !important; gap: 18px !important; padding: 24px !important; align-items: center !important; }
