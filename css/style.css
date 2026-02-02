@@ -116,6 +116,37 @@ body {
     text-align: center;
 }
 
+/* Fancy welcome note placed above the welcome heading */
+.welcome-note {
+    display: inline-block;
+    max-width: 760px;
+    background: linear-gradient(180deg, rgba(122,75,217,0.04), rgba(122,75,217,0.01));
+    border: 2px solid #7a4bd9; /* purple outline */
+    padding: 10px 16px;
+    border-radius: 10px;
+    color: #2b1530;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(122,75,217,0.04);
+}
+.welcome-note p { margin: 0; color: #4b2b4f; }
+
+@media (max-width: 575px) {
+    .welcome-note { width: calc(100% - 32px); padding: 8px 12px; border-left-width: 3px; }
+    .welcome-note p { font-size: 0.85rem; }
+}
+
+/* Ensure only one hamburger is visible on mobile - disable default bootstrap background icon */
+@media (max-width: 575px) {
+    .navbar-toggler {
+        border: none;
+        padding: 6px 8px;
+        background: transparent;
+        z-index: 1300;
+    }
+    .navbar-toggler .navbar-toggler-icon { background-image: none !important; }
+    .navbar-toggler .fa-bars { font-size: 1.15rem; color: #fff; }
+}
+
 /* Optional: remove any margin from the logo itself */
 /* Logo closer to navbar */
 
@@ -1061,11 +1092,11 @@ img, video, iframe {
 }
 
 @media (max-width: 575px) {
-  .nav-logo { max-width: 120px; }
+    .nav-logo { max-width: 120px; }
   .welcome-strip { padding: 40px 10px; background-size: 140px auto; }
   .welcome-strip h3 { font-size: 1.4rem; }
-  .hero { height: 45vh; }
-  .hero-overlay h1 { font-size: 1.6rem; }
+    .hero { height: 45vh; }
+    .hero-overlay h1 { font-size: 1.6rem; }
   .stat-tile { padding: 14px; font-size: 0.95rem; }
   .image-placeholder { min-height: 140px; }
   /* keep social sidebar available; visibility is controlled by .open so toggle works reliably */
@@ -1076,6 +1107,61 @@ img, video, iframe {
   section { scroll-margin-top: 80px; }
   .navbar-custom .nav-links { flex-direction: column; gap: 12px; }
 } 
+
+/* Mobile-only: overlay navbar on top of hero image, transparent until menu opened */
+@media (max-width: 575px) {
+    .navbar-custom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: transparent;
+        padding: 10px 12px;
+        z-index: 1200;
+    }
+
+    /* Keep brand/logo on the left and toggler on the right */
+    .navbar-custom .container-fluid { display:flex; align-items:center; gap:8px; }
+    .navbar-custom .navbar-brand { margin-right: 0; }
+    .navbar-custom .navbar-toggler { margin-left: auto; }
+
+    /* When the collapsed menu is shown, give it an opaque background for readability */
+    .navbar-custom .navbar-collapse.collapse.show {
+        background: #ffffff;
+        padding: 12px;
+        border-radius: 10px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    /* Ensure nav links in expanded menu are readable */
+    .navbar-custom .navbar-collapse .nav-links a { color: #1a0a3c; }
+    .navbar-custom .navbar-collapse .nav-links a.active,
+    .navbar-custom .navbar-collapse .nav-links a:hover { color: #7a4bd9; }
+
+    /* Slightly reduce logo size overlaying the hero */
+    .navbar-custom .nav-logo { max-height: 56px; }
+}
+
+/* Mobile: hide full navbar (links) visually but keep brand + toggler visible; allow collapse to show when toggled */
+@media (max-width: 575px) {
+    .navbar-custom .navbar-collapse { display: none !important; }
+    .navbar-custom .navbar-collapse.collapse.show {
+        display: block !important;
+        position: absolute;
+        top: 56px;
+        right: 12px;
+        left: 12px;
+        width: calc(100% - 24px);
+        background: #ffffff;
+        padding: 12px;
+        border-radius: 10px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        z-index: 1250;
+    }
+
+    /* Reduce hero title only on mobile to avoid overlapping logo/toggler */
+    .hero-title { font-size: 1.15rem !important; line-height: 1.05; }
+}
 
 /* Focus-visible enhancement for keyboard users */
 :focus-visible {
@@ -1169,6 +1255,9 @@ section:not(.hero):not(.welcome-strip) {
     .hero-overlay { padding: 28px 0; }
   .mobile-cta { bottom: 14px; width: calc(100% - 40px); left: 50%; transform: translateX(-50%); }
   .hero-title { font-size: 1.6rem; }
+
+    /* Hide small decorative badge on mobile to preserve space */
+    .hero-badge { display: none !important; }
 
 /* Responsive hero title sizing */
 .hero-title { font-size: clamp(1.6rem, 2.4vw + 1rem, 2.4rem); }
