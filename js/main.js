@@ -1,13 +1,5 @@
-window.addEventListener("scroll", () => {
-    const nav = document.getElementById("mainNav");
-    if (nav) {
-        if (window.scrollY > 60) {
-            nav.classList.add("scrolled");
-        } else {
-            nav.classList.remove("scrolled");
-        }
-    }
-});
+// Navbar scrolled behavior removed per user request — nav will remain static while scrolling.
+// (No action needed here.)
 
 document.addEventListener("DOMContentLoaded", () => {
     const scheduleBtn = document.getElementById("scheduleBtn");
@@ -15,15 +7,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmationModalEl = document.getElementById('confirmationModal');
     const contactSuccessModalEl = document.getElementById('contactSuccessModal');
 
-    const appointmentModal = appointmentModalEl ? new bootstrap.Modal(appointmentModalEl) : null;
-    const confirmationModal = confirmationModalEl ? new bootstrap.Modal(confirmationModalEl) : null;
-    const contactSuccessModal = contactSuccessModalEl ? new bootstrap.Modal(contactSuccessModalEl) : null;
+    const appointmentModal = (typeof bootstrap !== 'undefined' && appointmentModalEl) ? new bootstrap.Modal(appointmentModalEl) : null;
+    const confirmationModal = (typeof bootstrap !== 'undefined' && confirmationModalEl) ? new bootstrap.Modal(confirmationModalEl) : null;
+    const contactSuccessModal = (typeof bootstrap !== 'undefined' && contactSuccessModalEl) ? new bootstrap.Modal(contactSuccessModalEl) : null;
 
-    // Open appointment modal
-    if (scheduleBtn && appointmentModal) {
+    // Debug: confirm elements are present
+    console.debug('DOM ready - scheduleBtn', !!scheduleBtn, 'appointmentModalEl', !!appointmentModalEl, 'confirmationModalEl', !!confirmationModalEl, 'contactSuccessModalEl', !!contactSuccessModalEl);
+
+    // Open appointment modal (robust: uses getOrCreateInstance and logs if anything missing)
+    if (scheduleBtn) {
         scheduleBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            appointmentModal.show();
+            try {
+                if (typeof bootstrap === 'undefined') {
+                    console.error('Bootstrap JS not found. Modal cannot be shown.');
+                    alert('An unexpected error occurred. Please refresh the page and try again.');
+                    return;
+                }
+                const modalEl = appointmentModalEl || document.getElementById('appointmentModal');
+                if (!modalEl) {
+                    console.error('Appointment modal element not found');
+                    alert('Modal element not found. Please refresh and try again.');
+                    return;
+                }
+                // getOrCreateInstance is robust across Bootstrap versions bundled as bundle
+                const instance = bootstrap.Modal.getOrCreateInstance(modalEl);
+                instance.show();
+                console.debug('Appointment modal shown');
+            } catch (err) {
+                console.error('Error showing appointment modal:', err);
+                alert('Unable to open the appointment form. Please try again later.');
+            }
         });
     }
 
@@ -148,11 +162,7 @@ document.addEventListener('scroll', () => {
         else backToTop.classList.remove('show');
     }
 
-    // Navbar scrolled class
-    const nav = document.getElementById('mainNav');
-    if (nav) {
-        if (window.scrollY > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
-    }
+    // Navbar scrolled behavior removed — nothing to change on scroll for the navbar.
 });
 
 // Smooth nav link scrolling
@@ -170,8 +180,21 @@ navLinks.forEach(link => {
 // Back to top action
 if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// Mobile CTA opens appointment modal
-if (mobileCta) mobileCta.addEventListener('click', (e) => { e.preventDefault(); const appt = document.getElementById('appointmentModal'); if (appt) new bootstrap.Modal(appt).show(); });
+// Mobile CTA opens appointment modal (robust)
+if (mobileCta) mobileCta.addEventListener('click', (e) => {
+    e.preventDefault();
+    try {
+        if (typeof bootstrap === 'undefined') {
+            console.error('Bootstrap JS not found.');
+            return;
+        }
+        const appt = document.getElementById('appointmentModal');
+        if (!appt) return;
+        bootstrap.Modal.getOrCreateInstance(appt).show();
+    } catch (err) {
+        console.error('Error opening appointment modal from mobile CTA', err);
+    }
+});
 
 // Counters
 const counters = document.querySelectorAll('.counter');
