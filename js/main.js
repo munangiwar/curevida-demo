@@ -1,9 +1,11 @@
 window.addEventListener("scroll", () => {
     const nav = document.getElementById("mainNav");
-    if (window.scrollY > 60) {
-        nav.classList.add("scrolled");
-    } else {
-        nav.classList.remove("scrolled");
+    if (nav) {
+        if (window.scrollY > 60) {
+            nav.classList.add("scrolled");
+        } else {
+            nav.classList.remove("scrolled");
+        }
     }
 });
 
@@ -11,88 +13,92 @@ document.addEventListener("DOMContentLoaded", () => {
     const scheduleBtn = document.getElementById("scheduleBtn");
     const appointmentModalEl = document.getElementById('appointmentModal');
     const confirmationModalEl = document.getElementById('confirmationModal');
+    const contactSuccessModalEl = document.getElementById('contactSuccessModal');
 
-    const appointmentModal = new bootstrap.Modal(appointmentModalEl);
-    const confirmationModal = new bootstrap.Modal(confirmationModalEl);
+    const appointmentModal = appointmentModalEl ? new bootstrap.Modal(appointmentModalEl) : null;
+    const confirmationModal = confirmationModalEl ? new bootstrap.Modal(confirmationModalEl) : null;
+    const contactSuccessModal = contactSuccessModalEl ? new bootstrap.Modal(contactSuccessModalEl) : null;
 
     // Open appointment modal
-    scheduleBtn.addEventListener("click", (e) => {
-        e.preventDefault(); // stop default link navigation
-        appointmentModal.show();
-    });
+    if (scheduleBtn && appointmentModal) {
+        scheduleBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            appointmentModal.show();
+        });
+    }
 
-    // Handle form submission
-    const form = document.getElementById('appointmentForm');
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
+    // Handle appointment form submission
+    const appointmentForm = document.getElementById('appointmentForm');
+    if (appointmentForm) {
+        appointmentForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formData = new FormData(appointmentForm);
 
-        // Close form modal and open confirmation modal
-        appointmentModal.hide();
-        confirmationModal.show();
+            fetch(appointmentForm.action, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json().catch(() => ({})))
+            .then(data => {
+                if (data && data.success) {
+                    if (appointmentModal) appointmentModal.hide();
+                    if (confirmationModal) confirmationModal.show();
+                    appointmentForm.reset();
+                } else {
+                    alert(data.message || "Something went wrong. Please try again.");
+                }
+            })
+            .catch(() => {
+                alert("Server error. Please try again later.");
+            });
+        });
+    }
 
-        // Reset the form
-        form.reset();
-    });
+    // Contact form handling
+    const contactForm = document.getElementById("contactForm");
+    if (contactForm) {
+        contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+
+            fetch(contactForm.action, {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.json().catch(() => ({})))
+            .then(data => {
+                if (data && data.success) {
+                    if (contactSuccessModal) contactSuccessModal.show();
+                    else alert('Message sent successfully.');
+                    contactForm.reset();
+                } else {
+                    alert(data.message || "Submission failed. Please try again.");
+                }
+            })
+            .catch(() => {
+                alert("Server error. Please try again later.");
+            });
+        });
+    }
 });
 
-document.getElementById("appointmentForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+// Smooth active nav link on scroll
+document.addEventListener("scroll", () => {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
 
-  const form = this;
-  const formData = new FormData(form);
-
-  fetch(form.action, {
-    method: "POST",
-    body: formData
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        document.getElementById("appointmentModal").style.display = "none";
-        document.getElementById("confirmationModal").style.display = "flex";
-        form.reset();
-      } else {
-        alert(data.message || "Something went wrong. Please try again.");
-      }
-    })
-    .catch(() => {
-      alert("Server error. Please try again later.");
+    let current = "";
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (pageYOffset >= sectionTop) {
+            current = section.getAttribute("id");
+        }
     });
-});
 
-/* Close confirmation modal */
-document.getElementById("closeConfirmationModal").addEventListener("click", () => {
-  document.getElementById("confirmationModal").style.display = "none";
-});
-
-
-const contactForm = document.getElementById("contactForm");
-const successModal = document.getElementById("contactSuccessModal");
-const closeSuccessModal = document.getElementById("closeContactSuccessModal");
-
-contactForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  const formData = new FormData(contactForm);
-
-  fetch(contactForm.action, {
-    method: "POST",
-    body: formData
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        successModal.style.display = "flex";
-        contactForm.reset();
-      } else {
-        alert(data.message || "Submission failed. Please try again.");
-      }
-    })
-    .catch(() => {
-      alert("Server error. Please try again later.");
+    navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${current}`) {
+            link.classList.add("active");
+        }
     });
-});
-
-closeSuccessModal.addEventListener("click", () => {
-  successModal.style.display = "none";
 });
