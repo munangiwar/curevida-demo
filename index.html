@@ -27,47 +27,83 @@
 <body>
 
     <!-- LEFT SOCIAL / CONTACT SIDEBAR -->
-<div class="social-sidebar">
+<div class="social-sidebar" id="socialPanel" aria-hidden="true">
     <ul>
         <li>
-            <a href="tel:0113128642" title="Call Us"><i class="fa-solid fa-phone"></i></a>
+            <a href="tel:0113128642" title="Call Us"><i class="fa-solid fa-phone" aria-hidden="true"></i><span class="visually-hidden">Call</span></a>
         </li>
         <li>
-            <a href="https://wa.me/27814733703" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://wa.me/27814733703" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span class="visually-hidden">WhatsApp</span></a>
         </li>
         <li>
-            <a href="https://www.facebook.com/homecarecurevida" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.facebook.com/homecarecurevida" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a>
         </li>
         <li>
-            <a href="https://www.instagram.com/curevida_healthcare?igsh=MTh2a2Y2N2V3aGUzbQ==" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.instagram.com/curevida_healthcare?igsh=MTh2a2Y2N2V3aGUzbQ==" target="_blank" title="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a>
         </li>
         <li>
-            <a href="mailto:Homecare@curevida.co.za" title="Email"><i class="fa-solid fa-envelope"></i></a>
+            <a href="mailto:Homecare@curevida.co.za" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span class="visually-hidden">Email</span></a>
         </li>
     </ul>
 </div>
 
+<!-- Mobile social toggle (small floating button) -->
+<button id="socialToggle" class="social-toggle d-lg-none" aria-label="Open social links" aria-expanded="false" aria-controls="socialPanel">
+  <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+</button> 
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-custom" id="mainNav">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="assets/images/logo.png" alt="Curevida Logo" class="nav-logo">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavCollapse" aria-controls="mainNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"><i class="fa fa-bars" style="color:#fff;"></i></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="mainNavCollapse">
-      <ul class="navbar-nav ms-auto nav-links">
-        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      </ul>
+
+
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <nav class="navbar navbar-expand-lg navbar-custom" id="mainNav" role="navigation" aria-label="Main navigation">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#hero">
+        <img src="assets/images/logo.png" alt="Curevida Logo" class="nav-logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavCollapse" aria-controls="mainNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"><i class="fa fa-bars" style="color:#fff;"></i></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNavCollapse">
+        <ul class="navbar-nav ms-auto nav-links">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="hero-overlay">
+    <div class="container text-center hero-content" data-aos="fade-up">
+      <div class="hero-badge">Trusted Clinical Care • Since 2012</div>
+      <h1 class="display-5 hero-title">
+        Advanced Clinical Care,<br>
+        <span class="highlight">Delivered at Home</span>
+      </h1>
+      <p class="mt-3 lead hero-lead">Reducing hospital admissions and improving patient outcomes through professional home-based healthcare.</p>
+
+      <div class="d-flex justify-content-center gap-3 mt-4">
+        <button id="scheduleBtn" class="btn btn-primary btn-lg" aria-label="Open appointment form">Schedule an Appointment</button>
+        <a href="#services" class="btn btn-outline-light btn-lg d-none d-md-inline">View Services</a>
+      </div>
+
+      <div class="mt-4">
+        <small class="text-white-50">We support doctors, hospitals, and medical aids to safely manage clinically stable patients at home.</small>
+      </div>
     </div>
   </div>
-</nav>
+
+  <!-- SVG wave for a modern transition -->
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0,30 C180,80 360,0 720,30 C1080,60 1260,10 1440,40 L1440,100 L0,100 Z" fill="#f4f1f8"></path>
+    </svg>
+  </div>
+</section>
 
 <section class="welcome-strip" id="home">
     <div class="container text-center header-with-logo">
@@ -81,26 +117,8 @@
     </div>
 </section>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-overlay">
-        <div class="container text-center">
-            <h1>Advanced Clinical Care, Delivered at Home</h1>
-            <p class="mt-3">
-                Reducing hospital admissions and improving patient outcomes
-                through professional home-based healthcare.
-            </p>
-            <button id="scheduleBtn" class="btn btn-primary btn-lg">
-  Schedule an Appointment
-</button> 
-
-
-
-        </div>
-    </div>
-</section>
 <!-- Appointment Modal -->
-<div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+<div class="modal fade" id="appointmentModal" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -146,7 +164,7 @@
 
 
 <!-- Confirmation Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="confirmationModal" role="dialog" aria-modal="true" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-center p-4">
       <div class="modal-body">
@@ -164,11 +182,38 @@
 <section class="stats">
     <div class="container">
         <div class="row g-4 text-center">
-            <div class="col-md-3"><div class="stat-tile"><i class="fa-solid fa-star"></i><h3>4.9</h3><p>Client Rating</p></div></div>
-            <div class="col-md-3"><div class="stat-tile"><i class="fa-solid fa-user-doctor"></i><h3>20+</h3><p>Years Experience</p></div></div>
-            <div class="col-md-3"><div class="stat-tile"><i class="fa-solid fa-hospital"></i><h3>12+</h3><p>Established</p></div></div>
-            <div class="col-md-3"><div class="stat-tile"><i class="fa-solid fa-heart"></i><h3>890+</h3><p>Satisfied Clients</p></div></div>
-        </div>
+  <div class="col-md-3">
+    <div class="stat-tile" data-aos="fade-up">
+      <i class="fa-solid fa-star"></i>
+      <h3><span class="counter" data-target="4.9">0</span></h3>
+      <p>Client Rating</p>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="stat-tile" data-aos="fade-up" data-aos-delay="100">
+      <i class="fa-solid fa-user-doctor"></i>
+      <h3><span class="counter" data-target="20">0</span>+</h3>
+      <p>Years Experience</p>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="stat-tile" data-aos="fade-up" data-aos-delay="200">
+      <i class="fa-solid fa-hospital"></i>
+      <h3><span class="counter" data-target="12">0</span>+</h3>
+      <p>Established</p>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="stat-tile" data-aos="fade-up" data-aos-delay="300">
+      <i class="fa-solid fa-heart"></i>
+      <h3><span class="counter" data-target="890">0</span>+</h3>
+      <p>Satisfied Clients</p>
+    </div>
+  </div>
+</div> 
 
         <div class="stats-description mt-5">
             <p>
@@ -187,7 +232,9 @@
         <h2 class="text-center mb-5">-</h2>
         
         <div class="row g-5 align-items-center">
-            <div class="col-md-6 service-card">
+
+            <!-- Pair 1: Service -> Image -->
+            <div class="col-md-6 service-card" data-aos="fade-up">
                 <h4><i class="fa-solid fa-house-medical"></i> Hospital-at-Home Care</h4>
                 <ul>
                     <li>Safe discharge support</li>
@@ -196,17 +243,12 @@
                     <li>Rapid escalation to hospital</li>
                 </ul>
             </div>
-            
-              <div class="col-md-6 image-placeholder">
-  <img src="assets/images/image3.png" alt="Clinical Care Image" class="img-fluid">
-</div>
-            
-                         <div class="col-md-6 image-placeholder">
-  <img src="assets/images/image2.png" alt="Clinical Care Image" class="img-fluid">
-</div>
+            <div class="col-md-6 image-placeholder" data-aos="fade-left">
+                <img src="assets/images/image3.png" alt="Hospital at home" class="img-fluid rounded">
+            </div>
 
-
-            <div class="col-md-6 service-card">
+            <!-- Pair 2: Service -> Image -->
+            <div class="col-md-6 service-card" data-aos="fade-up" data-aos-delay="100">
                 <h4><i class="fa-solid fa-syringe"></i> Clinical Infusion Services</h4>
                 <ul>
                     <li>Polygam (IVIG)</li>
@@ -215,8 +257,12 @@
                     <li>Enzyme replacement therapies</li>
                 </ul>
             </div>
+            <div class="col-md-6 image-placeholder" data-aos="fade-left" data-aos-delay="100">
+                <img src="assets/images/image2.png" alt="Infusion services" class="img-fluid rounded">
+            </div>
 
-            <div class="col-md-6 service-card">
+            <!-- Pair 3: Service -> Image -->
+            <div class="col-md-6 service-card" data-aos="fade-up" data-aos-delay="200">
                 <h4><i class="fa-solid fa-vial"></i> Long-Term IV Therapy</h4>
                 <ul>
                     <li>IV antibiotics (4 weeks – 12 months)</li>
@@ -225,10 +271,9 @@
                     <li>Adverse reaction monitoring</li>
                 </ul>
             </div>
-
-            <div class="col-md-6 image-placeholder">
-  <img src="assets/images/image1.png" alt="Clinical Care Image" class="img-fluid">
-</div> 
+            <div class="col-md-6 image-placeholder" data-aos="fade-left" data-aos-delay="200">
+                <img src="assets/images/image1.png" alt="IV therapy" class="img-fluid rounded">
+            </div>
 
         </div>
     </div>
@@ -316,158 +361,150 @@
             ensuring compassionate and personalized care in the comfort of your home.
         </p>
 
-        <div class="row align-items-center justify-content-center flex-nowrap flex-md-wrap">
+        <div class="row align-items-center justify-content-center">
 
             <!-- Step 1 -->
-            <div class="col-md-3">
-                <div class="tile">
-                    <i class="fa-solid fa-stethoscope fa-2x mb-3"></i>
-                    <h5>Initial Consultation</h5>
-                    <p>We start with a comprehensive assessment to understand your unique health needs and preferences.</p>
+            <div class="col-12 col-md-3 mb-3">
+                <div class="tile d-flex align-items-start">
+                    <div class="step-icon me-3"><i class="fa-solid fa-stethoscope fa-2x" aria-hidden="true"></i></div>
+                    <div class="step-content">
+                        <h5>Initial Consultation</h5>
+                        <p class="mb-0">We start with a comprehensive assessment to understand your unique health needs and preferences.</p>
+                    </div>
+                    <div class="step-badge ms-3">1</div>
                 </div>
             </div>
 
             <!-- Arrow -->
-            <div class="arrow-col d-none d-md-flex align-items-center justify-content-center col-md-1">
-                <i class="fa-solid fa-arrow-right fa-2x"></i>
+            <div class="arrow-col d-flex align-items-center justify-content-center col-12 col-md-1 my-2">
+                <i class="fa-solid fa-arrow-right fa-2x" aria-hidden="true"></i>
             </div>
 
             <!-- Step 2 -->
-            <div class="col-md-3">
-                <div class="tile">
-                    <i class="fa-solid fa-file-medical fa-2x mb-3"></i>
-                    <h5>Customized Care Plan</h5>
-                    <p>Based on the initial assessment, we create a tailored care plan outlining the services and support you will receive.</p>
+            <div class="col-12 col-md-3 mb-3">
+                <div class="tile d-flex align-items-start">
+                    <div class="step-icon me-3"><i class="fa-solid fa-file-medical fa-2x" aria-hidden="true"></i></div>
+                    <div class="step-content">
+                        <h5>Customized Care Plan</h5>
+                        <p class="mb-0">Based on the initial assessment, we create a tailored care plan outlining the services and support you will receive.</p>
+                    </div>
+                    <div class="step-badge ms-3">2</div>
                 </div>
             </div>
 
             <!-- Arrow -->
-            <div class="arrow-col d-none d-md-flex align-items-center justify-content-center col-md-1">
-                <i class="fa-solid fa-arrow-right fa-2x"></i>
+            <div class="arrow-col d-flex align-items-center justify-content-center col-12 col-md-1 my-2">
+                <i class="fa-solid fa-arrow-right fa-2x" aria-hidden="true"></i>
             </div>
 
             <!-- Step 3 -->
-            <div class="col-md-3">
-                <div class="tile">
-                    <i class="fa-solid fa-hand-holding-medical fa-2x mb-3"></i>
-                    <h5>Implementation</h5>
-                    <p>Our skilled healthcare professionals provide the agreed-upon services directly in your home.</p>
+            <div class="col-12 col-md-3 mb-3">
+                <div class="tile d-flex align-items-start">
+                    <div class="step-icon me-3"><i class="fa-solid fa-hand-holding-medical fa-2x" aria-hidden="true"></i></div>
+                    <div class="step-content">
+                        <h5>Implementation</h5>
+                        <p class="mb-0">Our skilled healthcare professionals provide the agreed-upon services directly in your home.</p>
+                    </div>
+                    <div class="step-badge ms-3">3</div>
                 </div>
             </div>
 
             <!-- Arrow -->
-            <div class="arrow-col d-none d-md-flex align-items-center justify-content-center col-md-1">
-                <i class="fa-solid fa-arrow-right fa-2x"></i>
+            <div class="arrow-col d-flex align-items-center justify-content-center col-12 col-md-1 my-2">
+                <i class="fa-solid fa-arrow-right fa-2x" aria-hidden="true"></i>
             </div>
 
             <!-- Step 4 -->
-            <div class="col-md-3">
-                <div class="tile">
-                    <i class="fa-solid fa-comments fa-2x mb-3"></i>
-                    <h5>Ongoing Support</h5>
-                    <p>We maintain open lines of communication with you and your family, providing updates and encouraging feedback.</p>
+            <div class="col-12 col-md-3 mb-3">
+                <div class="tile d-flex align-items-start">
+                    <div class="step-icon me-3"><i class="fa-solid fa-comments fa-2x" aria-hidden="true"></i></div>
+                    <div class="step-content">
+                        <h5>Ongoing Support</h5>
+                        <p class="mb-0">We maintain open lines of communication with you and your family, providing updates and encouraging feedback.</p>
+                    </div>
+                    <div class="step-badge ms-3">4</div>
                 </div>
             </div>
 
-        </div>
+        </div> 
     </div>
 </section>
 
 <!-- ABOUT US SECTION -->
 <section id="about" class="about-us py-5">
     <div class="container">
-        <h2 class="text-center mb-5">About Us</h2>
-        <div class="row g-4">
+        <h2 class="text-center mb-3">About Us</h2>
+        <p class="text-center lead text-muted mb-4">Compassionate, professional home-based care tailored to your needs — wherever you call home.</p>
 
-            <!-- Left Mosaic -->
- <!-- Left Mosaic with Words -->
-<div class="col-lg-6 d-flex flex-wrap justify-content-between">
+        <div class="row g-4 align-items-center">
 
-    <!-- Tile 1 -->
-    <div class="about-tile large" style="background-color:#ad1457;" data-aos="fade-right" data-aos-delay="100">
-        <span class="tile-text">Care</span>
-    </div>
+            <!-- Left: Visual (replaced mosaic) -->
+            <div class="col-12 col-lg-6 order-1">
+                <div class="about-image text-center">
+                    <img src="assets/images/image1.png" alt="Our care team" class="img-fluid rounded shadow-sm" />
+                </div>
 
-    <!-- Tile 2 -->
-    <div class="about-tile small" style="background-color:#6a1b9a;" data-aos="fade-left" data-aos-delay="200">
-        <span class="tile-text">Dedication</span>
-    </div>
-
-    <!-- Tile 3 -->
-    <div class="about-tile medium" style="background-color:#f48fb1;" data-aos="fade-right" data-aos-delay="300">
-        <span class="tile-text">Comfort</span>
-    </div>
-
-    <!-- Tile 4 -->
-    <div class="about-tile small" style="background-color:#ce93d8;" data-aos="fade-left" data-aos-delay="400">
-        <span class="tile-text">Trust</span>
-    </div>
-
-</div>
-
-
-
-            <!-- Right Content -->
-            <div class="col-lg-6">
-                <h3>Caring For You, Wherever You Call Home</h3>
-                <p>
-                    Our personalized home care services include assistance with daily activities, medication management, 
-                    wound care, and specialized treatments such as intravenous (IV) therapies. We are dedicated to delivering 
-                    compassionate, expert care that promotes recovery and independence, ensuring patients receive the support 
-                    they need in the comfort of their homes.
-                </p>
-                <p>
-                    For workplaces, we offer tailored healthcare services, including occupational health assessments, chronic 
-                    disease management, and on-site injury treatment. Our goal is to enhance worker health, safety, and 
-                    productivity by providing preventative care, wellness programs, and mobile healthcare units directly at 
-                    industrial sites.
-                </p>
-                <p>
-                    Cure-Vida combines professional care with flexibility, ensuring the well-being of both individuals at home 
-                    and employees in industrial environments.
-                </p>
-
-                <h4>A Dedicated Team You Can Trust</h4>
-                <p>
-                    Our caregivers and medical staff are not only highly trained but also deeply committed to offering compassionate, 
-                    reliable care. With Cure-Vida, you can trust that your health is in capable hands, with services designed to 
-                    promote long-term health and recovery.
-                </p>
-
-                <h4>Personalized Care in the Comfort of Your Home</h4>
-                <p>
-                    At Cure-Vida, we believe that quality healthcare should be convenient and accessible. Our team of skilled healthcare 
-                    professionals provides tailored home-based care, focusing on individual needs to ensure comfort, dignity, and 
-                    enhanced well-being.
-                </p>
-
-                <h4>Our Values</h4>
-                <p>
-                    Guided by Compassion, Built on Trust, Committed to Your Well-being. At Cure-Vida, our core values shape the care 
-                    we provide to both individuals in their homes and employees in industrial settings. We are dedicated to delivering 
-                    personalized, high-quality care with compassion, integrity, and professionalism.
-                </p>
-
-                <p>
-                    ” Your health, your home, our care. Together, we create a path to better living. “
-                </p>
-
-                <h5>Integrity and Trust</h5>
-                <p>
-                    At Cure-Vida, trust is the foundation of our services. We are committed to maintaining transparency, reliability, 
-                    and professionalism in everything we do, ensuring that our patients and their families feel confident in the care 
-                    we provide.
-                </p>
-
-                <h5>Compassionate Care</h5>
-                <p>
-                    We believe in treating every individual with kindness, respect, and empathy. Our focus is on providing personalized 
-                    care that honors the dignity and unique needs of each patient, fostering a supportive and caring environment.
-                </p>
+                <!-- Mobile CTA under image -->
+                <div class="mt-3 text-center d-lg-none">
+                    <a href="#contact" class="btn btn-primary btn-lg about-cta">Get Care Now</a>
+                </div>
             </div>
+
+
+            <!-- Right: Content and Benefits -->
+            <div class="col-12 col-lg-6 order-2">
+
+                <h3 class="mb-3">Caring For You, Wherever You Call Home</h3>
+                <p>
+                    Our personalized home care services include assistance with daily activities, medication management, wound care,
+                    and specialized treatments such as intravenous (IV) therapies. We are dedicated to delivering compassionate, expert
+                    care that promotes recovery and independence, ensuring patients receive the support they need in the comfort of their homes.
+                </p>
+
+                <p>
+                    For workplaces, we offer tailored healthcare services, including occupational health assessments, chronic disease
+                    management, and on-site injury treatment. Our goal is to enhance worker health, safety, and productivity by providing
+                    preventative care, wellness programs, and mobile healthcare units directly at industrial sites.
+                </p>
+
+                <div class="row g-3 my-4">
+                    <div class="col-12 col-md-4">
+                        <div class="benefit-card p-3 text-center h-100">
+                            <i class="fa-solid fa-user-nurse fa-2x mb-2" aria-hidden="true"></i>
+                            <h5 class="mb-1">Skilled Team</h5>
+                            <p class="small text-muted mb-0">Qualified clinicians and caregivers.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="benefit-card p-3 text-center h-100">
+                            <i class="fa-solid fa-clock fa-2x mb-2" aria-hidden="true"></i>
+                            <h5 class="mb-1">24/7 Support</h5>
+                            <p class="small text-muted mb-0">Reliable assistance when you need it most.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="benefit-card p-3 text-center h-100">
+                            <i class="fa-solid fa-handshake-angle fa-2x mb-2" aria-hidden="true"></i>
+                            <h5 class="mb-1">Trusted Care</h5>
+                            <p class="small text-muted mb-0">Compassion and integrity at every step.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mb-3">Cure-Vida combines professional care with flexibility, ensuring the well-being of both individuals at home
+                    and employees in industrial environments.</p>
+
+                <div class="d-none d-lg-block mt-3">
+                    <a href="#contact" class="btn btn-primary about-cta">Schedule a Visit</a>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </section>
+
+<!-- TESTIMONIALS -->
 
 <!-- TESTIMONIALS -->
 <section id="testimonials" class="testimonials-section">
@@ -663,7 +700,7 @@
 
 </script>
 
-<div class="modal fade" id="contactSuccessModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="contactSuccessModal" role="dialog" aria-modal="true" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-center p-4">
       <div class="modal-body">
@@ -674,6 +711,12 @@
     </div>
   </div>
 </div>
+
+<!-- Mobile sticky CTA -->
+<a href="#" id="mobileCta" class="mobile-cta d-lg-none" aria-label="Book Now"><i class="fa fa-calendar-check me-2"></i>Book Now</a>
+
+<!-- Back to top -->
+<button id="backToTop" class="back-to-top" aria-label="Back to top"><i class="fa fa-angle-up"></i></button> 
 
 </body>
 </html>
