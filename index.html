@@ -14,15 +14,47 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
+    <!-- Custom CSS --> 
     <link rel="stylesheet" href="css/style.css">
 
     <!-- AOS Library for scroll animations -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-
-
     <!-- JS -->
     <!-- main.js moved to load after Bootstrap bundle for correct Bootstrap availability -->
+    
+    <!-- Hamburger Menu Functions -->
+    <script>
+        function toggleMobileMenu() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (hamburgerBtn && mobileMenu) {
+                hamburgerBtn.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                hamburgerBtn.setAttribute('aria-expanded', hamburgerBtn.classList.contains('active'));
+            }
+        }
+
+        function closeMobileMenu(linkElement) {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            // Close the menu
+            hamburgerBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            
+            // Smooth scroll to the target section
+            const href = linkElement.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                event.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -60,43 +92,66 @@
       <img src="assets/images/logo.png" alt="Curevida Logo" class="nav-logo">
     </a>
 
-    <div class="collapse navbar-collapse" id="mainNavCollapse">
-      <ul class="navbar-nav ms-auto nav-links">
-        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+    <!-- Desktop Navigation Links -->
+    <ul class="nav-links d-none d-lg-flex ms-auto">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#stakeholders">Stakeholders</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <!-- Hamburger Button -->
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <ul class="mobile-nav-links">
+        <li><a href="#home" onclick="closeMobileMenu(this)">Home</a></li>
+        <li><a href="#services" onclick="closeMobileMenu(this)">Services</a></li>
+        <li><a href="#mission" onclick="closeMobileMenu(this)">Mission</a></li>
+        <li><a href="#stakeholders" onclick="closeMobileMenu(this)">Stakeholders</a></li>
+        <li><a href="#process" onclick="closeMobileMenu(this)">Process</a></li>
+        <li><a href="#about" onclick="closeMobileMenu(this)">About</a></li>
+        <li><a href="#contact" onclick="closeMobileMenu(this)">Contact</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-overlay">
-    <div class="container text-center hero-content" data-aos="fade-up">
-        <h1>.</h1>
-      <div class="hero-badge">Trusted Clinical Care • Since 2012</div>
-      <h1 class="display-5 hero-title">
-        Advanced Clinical Care,<br>
-        <span class="highlight">Delivered at Home</span>
-      </h1>
-      <p class="mt-3 lead hero-lead">Reducing hospital admissions and improving patient outcomes through professional home-based healthcare.</p>
-
-      <div class="d-flex justify-content-center gap-3 mt-4">
-        <a href="#services" class="btn btn-outline-light btn-lg d-none d-md-inline">View Services</a>
+<!-- HERO SECTION -->
+<section class="hero-section" id="hero">
+  <div class="container">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-7">
+        <div class="hero-text-wrapper">
+          <span class="hero-label">Clinical Care Coordination</span>
+          <h1>Across the Healthcare Continuum</h1>
+          <p>Enabling safe, cost-effective care delivery across home, hospital, workplace, and community settings through integrated clinical coordination and professional healthcare services.</p>
+          <div class="hero-cta-group d-flex flex-wrap gap-3 mt-4">
+            <a href="#services" class="btn btn-primary btn-lg">Explore Services</a>
+          </div>
+        </div>
       </div>
-      
+      <div class="col-lg-5">
+        <div class="hero-card mx-lg-auto">
+          <div class="hero-card-body">
+            <h2>Care Delivered with Confidence</h2>
+            <p>Trusted clinical teams coordinate medication, nursing, and monitoring to keep patients safe at home while reducing hospital stay and readmission risk.</p>
+          </div>
+          <img src="assets/images/image2.png" alt="Patient-centered care" class="img-fluid hero-card-img">
+        </div>
+      </div>
     </div>
   </div>
-  <!-- SVG wave for a modern transition -->
-  <div class="hero-wave" aria-hidden="true">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <path d="M0,30 C180,80 360,0 720,30 C1080,60 1260,10 1440,40 L1440,100 L0,100 Z" fill="#f4f1f8"></path>
-    </svg>
-  </div>
 </section>
+
 <!-- Appointment Modal -->
 <div class="modal fade" id="appointmentModal" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -158,11 +213,28 @@
 
 
 
+<!-- HERO CALL-TO-ACTION -->
+<section class="hero-cta-section">
+  <div class="container text-center">
+    <p class="hero-motivation">Ready to experience healthcare redefined? Join thousands of patients who trust CureVida for seamless care coordination and better health outcomes.</p>
+    <div class="hero-cta-group d-flex flex-wrap gap-3 justify-content-center mt-4">
+      <a href="https://apps.apple.com/za/app/curevida/id6761898726" target="_blank" class="btn btn-outline-primary btn-lg d-flex align-items-center gap-2">
+        <i class="fab fa-app-store-ios"></i> Download on App Store
+      </a>
+      <div class="d-flex flex-column align-items-center gap-2" style="width:100%; max-width: 320px;">
+        <a href="https://curevida.work.gd/register" target="_blank" class="btn btn-primary btn-lg">Register</a>
+        <small class="text-muted">Already have an account?</small>
+        <a href="https://curevida.work.gd/login" target="_blank" class="btn btn-outline-primary btn-lg">Login</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- STATS -->
       <section class="welcome-strip" id="home">
         <div class="container text-center header-with-logo">
           <div class="welcome-note mx-auto mb-3" role="note">
-            <p class="small mb-0 text-muted">We support doctors, hospitals, and medical aids to safely manage clinically stable patients at home.</p>
+            <p class="small mb-0 text-muted">We support doctors, hospitals, medical aids, and stepdowns facilities to safely manage clinically stable patients at home.</p>
           </div>
           <h3>Hospital-at-Home & Advanced Clinical Care</h3>
           <p>
@@ -223,83 +295,340 @@
 <!-- SERVICES -->
 <section class="services-section" id="services">
     <div class="container">
-        <h2 class="text-center mb-5">Our Clinical Services</h2>
+        <div class="text-center mb-5">
+            <h2>Core Clinical Services</h2>
+            <p class="lead">Comprehensive care coordination and clinical services across the healthcare continuum</p>
+        </div>
         
-        <div class="row g-5 align-items-center">
+        <div class="row g-4">
 
-            <!-- Pair 1: Service -> Image -->
-            <div class="col-md-6 service-card" data-aos="fade-up">
-                <h4><i class="fa-solid fa-house-medical"></i> Hospital-at-Home Care</h4>
-                <ul>
-                    <li>Safe discharge support</li>
-                    <li>Structured nursing care at home</li>
-                    <li>Daily clinical monitoring</li>
-                    <li>Rapid escalation to hospital</li>
-                </ul>
+            <!-- Service 1: In-Hospital Case Management -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-hospital fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>In-Hospital Case Management</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-hospital fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">In-Hospital Case Management</h6>
+                                <p class="small"><strong>What it is:</strong> Coordinated clinical oversight during hospital admission, ensuring seamless discharge planning and care continuity.</p>
+                                <p class="small"><strong>Who it's for:</strong> Patients requiring hospital care with complex discharge needs, post-operative support, or transitional care planning.</p>
+                                <p class="small"><strong>How it works:</strong> Our case managers work with hospital teams to assess patient stability, plan appropriate discharge pathways, and arrange follow-up care.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 image-placeholder" data-aos="fade-left">
-                <img src="assets/images/image2.png" alt="Hospital at home" class="img-fluid rounded">
-            </div>
-
-            <!-- Pair 2: Service -> Image -->
-            <div class="col-md-6 service-card" data-aos="fade-up" data-aos-delay="100">
-                <h4><i class="fa-solid fa-syringe"></i> Clinical Infusion Services</h4>
-                <ul>
-                    <li>Polygam (IVIG)</li>
-                    <li>Iron infusions</li>
-                    <li>Biologic therapies</li>
-                    <li>Enzyme replacement therapies</li>
-                </ul>
-            </div>
-            <div class="col-md-6 image-placeholder" data-aos="fade-left" data-aos-delay="100">
-                <img src="assets/images/image1.png" alt="Infusion services" class="img-fluid rounded">
-            </div>
-
-            <!-- Pair 3: Service -> Image -->
-            <div class="col-md-6 service-card" data-aos="fade-up" data-aos-delay="200">
-                <h4><i class="fa-solid fa-vial"></i> Long-Term IV Therapy</h4>
-                <ul>
-                    <li>IV antibiotics (4 weeks – 12 months)</li>
-                    <li>IV antifungal therapy</li>
-                    <li>PICC line management</li>
-                    <li>Adverse reaction monitoring</li>
-                </ul>
-            </div>
-            <div class="col-md-6 image-placeholder" data-aos="fade-left" data-aos-delay="200">
-                <img src="assets/images/image3.png" alt="IV therapy" class="img-fluid rounded">
+            <div class="col-12 col-lg-6" data-aos="fade-up">
+                <img src="assets/images/image2.png" alt="Hospital case management" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
             </div>
 
-            <!-- Pair 4: Skilled Nursing & Clinical Monitoring -->
-            <div class="col-md-6 service-card" data-aos="fade-up" data-aos-delay="300">
-              <h4><i class="fa-solid fa-user-nurse"></i> Skilled Nursing & Clinical Monitoring</h4>
-              <ul>
-                <li>Registered nurse home visits</li>
-                <li>Vital signs and clinical observation</li>
-                <li>Treatment adherence monitoring</li>
-                <li>Escalation based on clinical status</li>
-              </ul>
+            <!-- Service 2: Hospital-at-Home Care -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-house-medical fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Hospital-at-Home Care</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-house-medical fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Hospital-at-Home Care</h6>
+                                <p class="small"><strong>What it is:</strong> Hospital-level care delivered safely in a patient's home, providing structured nursing, daily clinical monitoring, and rapid escalation protocols.</p>
+                                <p class="small"><strong>Who it's for:</strong> Clinically stable patients with acute medical conditions, post-operative recovery needs, or chronic condition exacerbations suitable for home management.</p>
+                                <p class="small"><strong>How it works:</strong> Registered nurses provide daily visits with vital sign monitoring, clinical assessment, treatment administration, and continuous communication with the treating physician.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 image-placeholder" data-aos="fade-left" data-aos-delay="300">
-              <img src="assets/images/image4.png" alt="Skilled nursing" class="img-fluid rounded">
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                <img src="assets/images/image7.jpg" alt="Hospital at home" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
             </div>
 
-            <!-- Pair 5: Medical Partner Services -->
-            <div class="col-md-6 service-card" data-aos="fade-up" data-aos-delay="400">
-              <h4><i class="fa-solid fa-hands-holding-medical"></i> Medical Partner Services</h4>
-              <ul>
-                <li>Doctor referral coordination</li>
-                <li>Hospital discharge support</li>
-                <li>Medical aid case management reporting</li>
-                <li>Clinical documentation and summaries</li>
-              </ul>
+            <!-- Service 3: Home Infusion Services -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-syringe fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Home Infusion Services</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-syringe fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Home Infusion Services</h6>
+                                <p class="small"><strong>What it is:</strong> Safe administration of intravenous therapies in the home environment with trained nursing staff and comprehensive clinical monitoring.</p>
+                                <p class="small"><strong>Who it's for:</strong> Patients requiring regular infusion therapies including immunoglobulins (IVIG), iron infusions, biologic therapies, and enzyme replacement therapies.</p>
+                                <p class="small"><strong>How it works:</strong> Certified infusion nurses administer prescribed therapies, monitor for adverse reactions, manage vascular access, and maintain clinical documentation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 image-placeholder" data-aos="fade-left" data-aos-delay="400">
-              <img src="assets/images/image5.png" alt="Medical partner services" class="img-fluid rounded">
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                <img src="assets/images/image3.png" alt="Home infusion services" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 4: Long-Term IV Therapy -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-vial fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Long-Term IV Therapy</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-vial fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Long-Term IV Therapy</h6>
+                                <p class="small"><strong>What it is:</strong> Extended intravenous treatment courses (4 weeks to 12+ months) delivered safely at home with specialized clinical monitoring and line management.</p>
+                                <p class="small"><strong>Who it's for:</strong> Patients with chronic infections, bone infections (osteomyelitis), complex fungal infections, or conditions requiring prolonged antimicrobial therapy.</p>
+                                <p class="small"><strong>How it works:</strong> Specialized nurses manage PICC lines or central lines, administer prescribed antibiotics/antifungals, perform sterile dressing changes, and monitor for complications.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                <img src="assets/images/image4.png" alt="Long-term IV therapy" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 5: Home Nursing & Clinical Monitoring -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-user-nurse fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Home Nursing & Clinical Monitoring</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-user-nurse fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Home Nursing & Clinical Monitoring</h6>
+                                <p class="small"><strong>What it is:</strong> Professional skilled nursing care with structured clinical observation, vital sign monitoring, and continuous communication with treating physicians.</p>
+                                <p class="small"><strong>Who it's for:</strong> Patients with chronic diseases requiring medication management, wound care, post-operative monitoring, or chronic disease exacerbation support.</p>
+                                <p class="small"><strong>How it works:</strong> Registered nurses conduct regular home visits, assess clinical stability, monitor treatment adherence, perform wound care, and escalate clinical concerns.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="400">
+                <img src="assets/images/image5.png" alt="Home nursing and clinical monitoring" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 6: Occupational & Primary Healthcare -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="500">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-briefcase-medical fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Occupational & Primary Healthcare</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-briefcase-medical fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Occupational & Primary Healthcare</h6>
+                                <p class="small"><strong>What it is:</strong> On-site workplace health services including occupational health assessments, preventative care, injury management, and chronic disease screening.</p>
+                                <p class="small"><strong>Who it's for:</strong> Employers seeking to enhance employee health, reduce absenteeism, manage occupational injuries, and implement preventative health programs.</p>
+                                <p class="small"><strong>How it works:</strong> Mobile healthcare teams provide on-site assessments, injury management, health screenings, and occupational health surveillance as per regulatory requirements.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="500">
+                <img src="assets/images/image6.png" alt="Occupational and primary healthcare" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 7: Health Screening & Risk Assessment -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="600">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-clipboard-check fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Health Screening & Clinical Risk Assessment</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-clipboard-check fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Health Screening & Risk Assessment</h6>
+                                <p class="small"><strong>What it is:</strong> Comprehensive health screening programs and clinical risk assessments to identify health risks and guide preventative interventions.</p>
+                                <p class="small"><strong>Who it's for:</strong> Individuals and organizations seeking proactive health management, chronic disease early detection, and preventative health planning.</p>
+                                <p class="small"><strong>How it works:</strong> Qualified clinicians conduct comprehensive assessments including vital signs, health history, lifestyle evaluation, and clinical risk stratification.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="600">
+                <img src="assets/images/image8.jpg" alt="Health screening and risk assessment" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 8: Disease Management -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="700">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-heartbeat fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Onsite Disease Management</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-heartbeat fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Onsite Disease Management</h6>
+                                <p class="small"><strong>What it is:</strong> Structured disease management programs for chronic conditions including diabetes, hypertension, asthma, and cardiovascular disease.</p>
+                                <p class="small"><strong>Who it's for:</strong> Patients with chronic diseases requiring ongoing clinical support, medication management, lifestyle counseling, and disease-specific education.</p>
+                                <p class="small"><strong>How it works:</strong> Clinical coordinators provide patient education, medication monitoring, lifestyle interventions, and coordination with primary care physicians.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="700">
+                <img src="assets/images/image9.jpg" alt="Disease management" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 9: Telemedicine Consultations -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="800">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-video fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Telemedicine Consultations</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-video fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Telemedicine Consultations</h6>
+                                <p class="small"><strong>What it is:</strong> Virtual healthcare consultations using secure video and audio technology to provide remote medical advice, diagnosis, and treatment planning.</p>
+                                <p class="small"><strong>Who it's for:</strong> Patients seeking convenient access to healthcare professionals without the need for in-person visits, including follow-up care and routine consultations.</p>
+                                <p class="small"><strong>How it works:</strong> Patients connect with healthcare providers through our secure platform for real-time consultations, prescription management, and health monitoring.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="800">
+                <img src="assets/images/image10.jpg" alt="Telemedicine consultations" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 10: Mental Health Support -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="900">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-brain fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Mental Health Support</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-brain fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Mental Health Support</h6>
+                                <p class="small"><strong>What it is:</strong> Comprehensive mental health services including counseling, therapy, and support for emotional well-being and mental health conditions.</p>
+                                <p class="small"><strong>Who it's for:</strong> Individuals experiencing stress, anxiety, depression, or other mental health challenges, seeking professional support and coping strategies.</p>
+                                <p class="small"><strong>How it works:</strong> Licensed therapists and counselors provide personalized sessions, both in-person and virtual, focusing on mental health assessment, therapy, and ongoing support.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="900">
+                <img src="assets/images/image11.jpg" alt="Mental health support" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 11: Palliative Care Services -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="1000">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-heart fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Palliative Care Services</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-heart fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Palliative Care Services</h6>
+                                <p class="small"><strong>What it is:</strong> Specialized care focused on providing relief from the symptoms and stress of serious illness, improving quality of life for patients and their families.</p>
+                                <p class="small"><strong>Who it's for:</strong> Patients with serious or life-limiting illnesses, including cancer, heart disease, respiratory conditions, and other chronic progressive diseases.</p>
+                                <p class="small"><strong>How it works:</strong> Interdisciplinary team provides pain management, symptom control, emotional support, and coordination with primary care physicians and specialists.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="1000">
+                <img src="assets/images/image12.png" alt="Palliative care services" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
+            </div>
+
+            <!-- Service 12: Rehabilitation Services -->
+            <div class="col-12 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="1100">
+                <div class="flip-card w-100">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="service-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-dumbbell fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Rehabilitation Services</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="service-flip-card p-4 rounded shadow-sm h-100">
+                                <i class="fa-solid fa-dumbbell fa-2x mb-2" style="color: #791864;"></i>
+                                <h6 class="mb-2">Rehabilitation Services</h6>
+                                <p class="small"><strong>What it is:</strong> Comprehensive rehabilitation programs including physical therapy, occupational therapy, and speech therapy delivered in the home environment.</p>
+                                <p class="small"><strong>Who it's for:</strong> Patients recovering from surgery, injury, stroke, or chronic conditions requiring therapeutic interventions to regain independence and function.</p>
+                                <p class="small"><strong>How it works:</strong> Licensed therapists conduct personalized assessments and develop treatment plans with regular home visits, exercises, and adaptive equipment recommendations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6" data-aos="fade-up" data-aos-delay="1100">
+                <img src="assets/images/image1.png" alt="Rehabilitation services" class="img-fluid rounded shadow-sm h-100 object-fit-cover">
             </div>
 
         </div>
     </div>
-</section>
+
 <!-- WHY HOSPITAL AT HOME WORKS -->
 <section class="hospital-works">
     <div class="container">
@@ -307,7 +636,7 @@
         <h2 class="text-center mb-4">WHY HOSPITAL-AT-HOME WORKS</h2>
 
         <div class="row g-5">
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="works-card">
                     <h4><i class="fa-solid fa-chart-line"></i> Clinical & Cost Benefits</h4>
                     <ul>
@@ -320,11 +649,11 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="works-card">
                     <h4><i class="fa-solid fa-shield-heart"></i> Clinical Safety</h4>
                     <ul>
-                        <li>Trained nursing staff</li>
+                        <li>Qualified healthcare professionals</li>
                         <li>Clear escalation protocols</li>
                         <li>After-hours patient support</li>
                         <li>POPIA-compliant clinical documentation</li>
@@ -335,122 +664,277 @@
     </div>
 </section>
 
-<!-- CLINICAL PARTNERSHIP MODEL -->
-<section class="clinical-partnership">
+<!-- MISSION, VISION & VALUES -->
+<section id="mission" class="mission-vision-values py-5 bg-light">
     <div class="container">
+        <h2 class="text-center mb-5">Our Mission</h2>
 
-        <div class="text-center mb-5">
-            <h2>Clinical Partnership Model</h2>
-            <p class="lead">
-                Curevida Health Care operates as a <strong>clinical extension of your practice</strong>,
-                not an independent treatment provider.
-            </p>
+        <div class="row g-4 justify-content-center">
+            <!-- Mission -->
+            <div class="col-12 col-md-8" data-aos="fade-up">
+                <div class="value-card h-100 p-4 text-center rounded shadow-sm">
+                    <i class="fa-solid fa-bullseye fa-3x mb-3" style="color: #791864;"></i>
+                    <h4 class="mb-3">Mission</h4>
+                    <p>To coordinate patient care across the continuum and deliver high-quality clinical services across home, workplace, and community-based settings, enabling safe transitions and optimizing healthcare outcomes.</p>
+                </div>
+            </div>
         </div>
+    </div>
+</section>
 
+<section id="vision" class="mission-vision-values py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Vision</h2>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Vision -->
+            <div class="col-12 col-md-8" data-aos="fade-up">
+                <div class="value-card h-100 p-4 text-center rounded shadow-sm">
+                    <i class="fa-solid fa-telescope fa-3x mb-3" style="color: #791864;"></i>
+                    <h4 class="mb-3">Vision</h4>
+                    <p>To enhance care coordination, improve patient outcomes, and achieve sustainable cost efficiency across the healthcare system through integrated clinical services and evidence-based care delivery.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="values" class="mission-vision-values py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Our Values</h2>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Compassionate, Patient-Centred Care -->
+            <div class="col-12 col-lg-3" data-aos="fade-up">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="value-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-heart fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Compassionate, Patient-Centred Care</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="value-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-heart fa-3x mb-3" style="color: #791864;"></i>
+                                <h6 class="mb-3">Compassionate, Patient-Centred Care</h6>
+                                <p class="small">Every patient receives respectful, dignified, and personalized clinical attention.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integrity & Professionalism -->
+            <div class="col-12 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="value-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-shield-alt fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Integrity & Professionalism</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="value-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-shield-alt fa-3x mb-3" style="color: #791864;"></i>
+                                <h6 class="mb-3">Integrity & Professionalism</h6>
+                                <p class="small">We maintain the highest clinical and ethical standards in all interactions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collaboration & Care Integration -->
+            <div class="col-12 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="value-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-handshake fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Collaboration & Care Integration</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="value-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-handshake fa-3x mb-3" style="color: #791864;"></i>
+                                <h6 class="mb-3">Collaboration & Care Integration</h6>
+                                <p class="small">We work seamlessly with physicians, hospitals, and care teams to optimize outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accountability & Excellence -->
+            <div class="col-12 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="value-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-star fa-3x mb-3" style="color: #791864;"></i>
+                                <h5>Accountability & Excellence</h5>
+                                <p class="small text-muted mt-3">Click to learn more</p>
+                            </div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="value-flip-card p-4 text-center rounded shadow-sm h-100">
+                                <i class="fa-solid fa-star fa-3x mb-3" style="color: #791864;"></i>
+                                <h6 class="mb-3">Accountability & Excellence</h6>
+                                <p class="small">We are accountable for clinical outcomes and committed to continuous improvement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STAKEHOLDERS SECTION -->
+<section id="stakeholders" class="stakeholders py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Who We Serve</h2>
+        <p class="text-center lead mb-5">CureVida coordinates care across the entire healthcare system, serving all key stakeholders.</p>
+        
         <div class="row g-4">
-            <div class="col-md-6">
-                <div class="partnership-tile">
-                    <h4><i class="fa-solid fa-handshake"></i> Our Commitment</h4>
-                    <ul>
-                        <li>We work strictly under your prescription</li>
-                        <li>We do not alter treatment plans without consultation</li>
-                        <li>We provide regular clinical feedback</li>
-                        <li>We escalate to hospital when clinically indicated</li>
-                    </ul>
+            <!-- Patients & Families -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up">
+                <div class="stakeholder-card p-4 rounded shadow-sm h-100">
+                    <i class="fa-solid fa-person-circle fa-2x mb-3" style="color: #791864;"></i>
+                    <h5>Patients & Families</h5>
+                    <p class="small mb-0">Access professional clinical care in the comfort of home, reduced hospital visits, improved quality of life, and comprehensive support throughout their care journey.</p>
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <div class="partnership-tile subtle">
-                    <p>
-                        If a patient is clinically stable but hospitalised due to infusion requirements
-                        or home-care challenges, Curevida can facilitate a safe transition to home care
-                        within <strong>24–48 hours</strong>.
-                    </p>
+            
+            <!-- Doctors & Specialists -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="stakeholder-card p-4 rounded shadow-sm h-100">
+                    <i class="fa-solid fa-user-doctor fa-2x mb-3" style="color: #791864;"></i>
+                    <h5>Doctors & Specialists</h5>
+                    <p class="small mb-0">Clinical extension of practice, daily patient monitoring feedback, safe care coordination, and seamless patient management without burden on practice resources.</p>
+                </div>
+            </div>
+            
+            <!-- Hospitals -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="stakeholder-card p-4 rounded shadow-sm h-100">
+                    <i class="fa-solid fa-hospital fa-2x mb-3" style="color: #791864;"></i>
+                    <h5>Hospitals</h5>
+                    <p class="small mb-0">Reduced bed occupancy, faster patient throughput, reduced readmissions, improved discharge planning, and enhanced patient satisfaction scores.</p>
+                </div>
+            </div>
+            
+            <!-- Medical Schemes & Administrators -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="stakeholder-card p-4 rounded shadow-sm h-100">
+                    <i class="fa-solid fa-chart-pie fa-2x mb-3" style="color: #791864;"></i>
+                    <h5>Medical Schemes & Administrators</h5>
+                    <p class="small mb-0">Cost reduction of 30-40% vs. hospital admission, preventative care focus, improved health outcomes, and efficient case management reporting and compliance.</p>
+                </div>
+            </div>
+            
+            <!-- Employers -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="stakeholder-card p-4 rounded shadow-sm h-100">
+                    <i class="fa-solid fa-briefcase fa-2x mb-3" style="color: #791864;"></i>
+                    <h5>Employers</h5>
+                    <p class="small mb-0">Enhanced employee wellness programs, reduced absenteeism, occupational health compliance, on-site healthcare delivery, and improved workplace health culture.</p>
+                </div>
+            </div>
+            
+            <!-- Community -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                <div class="stakeholder-card p-4 rounded shadow-sm h-100">
+                    <i class="fa-solid fa-people-group fa-2x mb-3" style="color: #791864;"></i>
+                    <h5>Community & Society</h5>
+                    <p class="small mb-0">Improved healthcare access, reduced disease burden, better health outcomes, and contribution to a more efficient healthcare system for all.</p>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 
-<!-- HOW HOME CARE WORKS -->
-<section class="home-care-works">
-    <div class="container text-center">
-        <h2 class="mb-5">How Home Care Works</h2>
-        <p class="lead mb-5">
-            Our care model is designed to bring professional medical support directly to you,
-            ensuring compassionate and personalized care in the comfort of your home.
-        </p>
-
-        <div class="row align-items-center justify-content-center">
-
-            <!-- Step 1 -->
-            <div class="col-12 col-md-3 mb-3">
-                <div class="tile d-flex align-items-start">
-                    <div class="step-icon me-3"><i class="fa-solid fa-stethoscope fa-2x" aria-hidden="true"></i></div>
-                    <div class="step-content">
-                        <h5>Initial Consultation</h5>
-                        <p class="mb-0">We start with a comprehensive assessment to understand your unique health needs and preferences.</p>
+<!-- HOW OUR SERVICES WORK PROCESS -->
+<section id="process" class="service-process py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">How Our Services Work</h2>
+        <p class="text-center lead mb-5">Our standardized care coordination process ensures quality, safety, and clinical efficacy.</p>
+        
+        <div class="row g-4 align-items-start">
+            <!-- Step 1: Referral -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up">
+                <div class="process-step p-4 rounded shadow-sm h-100">
+                    <div class="step-number mb-3">
+                        <span class="badge bg-primary">1</span>
                     </div>
-                    <div class="step-badge ms-3">1</div>
+                    <h5><i class="fa-solid fa-phone-to"></i> Referral Received</h5>
+                    <p class="small mb-0">Doctor, hospital, or medical scheme submits referral with clinical details, patient information, and specific care requirements. Our clinical team acknowledges receipt within 2 hours.</p>
                 </div>
             </div>
-
-            <!-- Arrow -->
-            <div class="arrow-col d-flex align-items-center justify-content-center col-12 col-md-1 my-2">
-                <i class="fa-solid fa-arrow-right fa-2x" aria-hidden="true"></i>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="col-12 col-md-3 mb-3">
-                <div class="tile d-flex align-items-start">
-                    <div class="step-icon me-3"><i class="fa-solid fa-file-medical fa-2x" aria-hidden="true"></i></div>
-                    <div class="step-content">
-                        <h5>Customized Care Plan</h5>
-                        <p class="mb-0">Based on the initial assessment, we create a tailored care plan outlining the services and support you will receive.</p>
+            
+            <!-- Step 2: Clinical Assessment -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="process-step p-4 rounded shadow-sm h-100">
+                    <div class="step-number mb-3">
+                        <span class="badge bg-primary">2</span>
                     </div>
-                    <div class="step-badge ms-3">2</div>
+                    <h5><i class="fa-solid fa-stethoscope"></i> Clinical Assessment</h5>
+                    <p class="small mb-0">CureVida clinical coordinator conducts comprehensive patient assessment to evaluate suitability for home-based care, identify clinical risks, and confirm patient consent.</p>
                 </div>
             </div>
-
-            <!-- Arrow -->
-            <div class="arrow-col d-flex align-items-center justify-content-center col-12 col-md-1 my-2">
-                <i class="fa-solid fa-arrow-right fa-2x" aria-hidden="true"></i>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="col-12 col-md-3 mb-3">
-                <div class="tile d-flex align-items-start">
-                    <div class="step-icon me-3"><i class="fa-solid fa-hand-holding-medical fa-2x" aria-hidden="true"></i></div>
-                    <div class="step-content">
-                        <h5>Implementation</h5>
-                        <p class="mb-0">Our skilled healthcare professionals provide the agreed-upon services directly in your home.</p>
+            
+            <!-- Step 3: Authorization -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="process-step p-4 rounded shadow-sm h-100">
+                    <div class="step-number mb-3">
+                        <span class="badge bg-primary">3</span>
                     </div>
-                    <div class="step-badge ms-3">3</div>
+                    <h5><i class="fa-solid fa-clipboard-check"></i> Authorization & Approval</h5>
+                    <p class="small mb-0">Medical scheme authorization (if required), insurance verification, and approval confirmation. CureVida coordinates directly with administrator for authorization.</p>
                 </div>
             </div>
-
-            <!-- Arrow -->
-            <div class="arrow-col d-flex align-items-center justify-content-center col-12 col-md-1 my-2">
-                <i class="fa-solid fa-arrow-right fa-2x" aria-hidden="true"></i>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="col-12 col-md-3 mb-3">
-                <div class="tile d-flex align-items-start">
-                    <div class="step-icon me-3"><i class="fa-solid fa-comments fa-2x" aria-hidden="true"></i></div>
-                    <div class="step-content">
-                        <h5>Ongoing Support</h5>
-                        <p class="mb-0">We maintain open lines of communication with you and your family, providing updates and encouraging feedback.</p>
+            
+            <!-- Step 4: Care Plan Development -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="process-step p-4 rounded shadow-sm h-100">
+                    <div class="step-number mb-3">
+                        <span class="badge bg-primary">4</span>
                     </div>
-                    <div class="step-badge ms-3">4</div>
+                    <h5><i class="fa-solid fa-file-medical"></i> Care Plan Development</h5>
+                    <p class="small mb-0">Detailed care plan created based on clinical assessment, physician instructions, and patient preferences. Plan includes visit frequency, monitoring protocols, and escalation procedures.</p>
                 </div>
             </div>
-
-        </div> 
+            
+            <!-- Step 5: Service Delivery -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="process-step p-4 rounded shadow-sm h-100">
+                    <div class="step-number mb-3">
+                        <span class="badge bg-primary">5</span>
+                    </div>
+                    <h5><i class="fa-solid fa-hand-holding-medical"></i> Service Delivery</h5>
+                    <p class="small mb-0">Qualified healthcare professionals deliver agreed-upon services at home. All patient contacts, clinical observations, and interventions are documented in POPIA-compliant records.</p>
+                </div>
+            </div>
+            
+            <!-- Step 6: Monitoring & Coordination -->
+            <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                <div class="process-step p-4 rounded shadow-sm h-100">
+                    <div class="step-number mb-3">
+                        <span class="badge bg-primary">6</span>
+                    </div>
+                    <h5><i class="fa-solid fa-comments"></i> Monitoring & Reporting</h5>
+                    <p class="small mb-0">Continuous clinical monitoring with daily reports to treating physician. Regular updates to medical schemes, family communication, and proactive escalation if clinical concerns arise.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
 
 <!-- ABOUT US SECTION -->
 <section id="about" class="about-us py-5">
@@ -464,11 +948,6 @@
             <div class="col-12 col-lg-6 order-1">
                 <div class="about-image text-center">
                     <img src="assets/images/image6.png" alt="Our care team" class="img-fluid rounded shadow-sm" />
-                </div>
-
-                <!-- Mobile CTA under image -->
-                <div class="mt-3 text-center d-lg-none">
-                    <a href="#contact" class="btn btn-primary btn-lg about-cta">Get Care Now</a>
                 </div>
             </div>
 
@@ -547,25 +1026,32 @@
 
     <div class="testimonial-wrapper">
       <div class="testimonial-card">
+        <div class="testimonial-decoration">
+          <div class="decoration-circle"></div>
+          <div class="decoration-circle"></div>
+        </div>
 
         <i class="fa-solid fa-quote-left quote-icon"></i>
 
         <p class="testimonial-text">
-          “ Cure-Vida has been a true blessing for my family. When my mother needed additional
-          support after her surgery, their team provided compassionate and professional care right
-          at home. The caregivers were attentive, respectful, and went above and beyond to ensure
-          her comfort and well-being. Thanks to Cure-Vida, my mom felt safe and loved during her
-          recovery. I can’t recommend them enough! ”
+          "Good day Nurse Phetho. Just a final update. My leg has completely healed, except for a small scab that will fall off any day. I am very grateful for the way I was treated. I'm positive that my problem is solved. Thank you so much."
         </p>
 
         <div class="testimonial-author">
-          <div class="author-avatar">JS</div>
+          <div class="author-avatar">LG</div>
           <div>
-            <h5>Mr. John Smith</h5>
-            <span>Family Care Client</span>
+            <h5>MRS. LE GRANGE</h5>
+            <span>Patient</span>
           </div>
         </div>
 
+        <div class="testimonial-rating">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+        </div>
       </div>
     </div>
 
@@ -637,7 +1123,7 @@
         <div class="row footer-top g-4">
 
             <!-- CONTACT INFO -->
-            <div class="col-md-4">
+            <div class="col-12 col-md-6 col-lg-3">
                 <h5>Contact Us</h5>
                 <ul class="footer-contact list-unstyled">
                     <li><i class="fa-solid fa-phone"></i> 011 312 8642</li>
@@ -648,7 +1134,7 @@
             </div>
 
             <!-- QUICK LINKS -->
-            <div class="col-md-4">
+            <div class="col-12 col-md-6 col-lg-3">
                 <h5>Quick Links</h5>
                 <ul class="footer-links list-unstyled">
                     <li><i class="fa-solid fa-angle-right"></i> <a href="#home">Home</a></li>
@@ -660,15 +1146,21 @@
             </div>
 
             <!-- SOCIAL MEDIA -->
-            <div class="col-md-4">
+            <div class="col-12 col-md-6 col-lg-3">
                 <h5>Follow Us</h5>
                 <div class="footer-social d-flex gap-3">
                     <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
                     <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
-                <p class="mt-3">Office Hours: Mon-Fri 08:00 AM - 17:00 PM</p>
+                <p class="mt-3">Office Hours: Mon-Fri 08:00–17:00</p>
                 <p>After Hours/Emergency: 081 473 3703</p>
+            </div>
+
+            <!-- APP STORE -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <h5>Download Our App</h5>
+                <a href="https://apps.apple.com/za/app/curevida/id6761898726" target="_blank" class="btn btn-primary btn-lg w-100"><i class="fab fa-app-store-ios"></i> Download on App Store</a>
             </div>
 
         </div>
@@ -677,7 +1169,7 @@
 
         <div class="row footer-bottom text-center mt-3">
             <div class="col-12">
-                <p>© 2025 Curevida Health Care. All Rights Reserved. <br> Website by RealTechSolutions</p>
+                <p>© 2025 Curevida Health Care. All Rights Reserved. <br></p>
                 <p><a href="#" class="footer-terms">Medical Disclaimer</a> | <a href="#" class="footer-terms">Terms & Conditions</a></p>
             </div>
         </div>

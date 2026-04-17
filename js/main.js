@@ -1,3 +1,35 @@
+// Global hamburger menu functions
+function toggleMobileMenu() {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    if (hamburgerBtn && mobileMenu) {
+        hamburgerBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        hamburgerBtn.setAttribute('aria-expanded', hamburgerBtn.classList.contains('active'));
+    }
+}
+
+function closeMobileMenu(linkElement) {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    // Close the menu
+    hamburgerBtn.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    
+    // Smooth scroll to the target section
+    const href = linkElement.getAttribute('href');
+    if (href && href.startsWith('#')) {
+        event.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+}
+
 // Navbar scrolled behavior removed per user request — nav will remain static while scrolling.
 // (No action needed here.)
 
@@ -129,6 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }));
     }
+
 });
 
 // Smooth active nav link on scroll + back-to-top + counters + mobile CTA
@@ -165,19 +198,7 @@ document.addEventListener('scroll', () => {
     // Navbar scrolled behavior removed — nothing to change on scroll for the navbar.
 });
 
-// Smooth nav link scrolling
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href && href.startsWith('#')) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
-
-// Back to top action
+// Back to top action (smooth scroll for desktop)
 if (backToTop) backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 // Mobile CTA opens appointment modal (robust)
@@ -225,3 +246,19 @@ function animateCounter(el, target, duration){
     }
     requestAnimationFrame(step);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Removed service pairing logic to allow CSS order control
+    // CSS now handles mobile ordering with order: 1 for service-card, order: 2 for image-placeholder
+});
+
+// Flip Card Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const flipCards = document.querySelectorAll('.flip-card');
+
+    flipCards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
+    });
+});
