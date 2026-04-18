@@ -549,9 +549,35 @@ body > * {
 }
 
 .footer h5 {
-    color: #ff69b4; /* dark pink headings */
-    margin-bottom: 20px;
-    font-weight: 600;
+    display: none;
+}
+
+.footer-section-icon {
+    position: absolute;
+    font-size: 120px;
+    color: #ff69b4;
+    opacity: 0.08;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.footer-top > div {
+    position: relative;
+    z-index: 1;
+}
+
+.footer-top > div > ul,
+.footer-top > div > p,
+.footer-top > div > .footer-social,
+.footer-top > div > .btn {
+    position: relative;
+    z-index: 2;
 }
 
 .footer a {
@@ -617,55 +643,128 @@ body > * {
 @media (max-width: 575px) {
     .footer {
         padding: 40px 16px 25px 16px;
+        text-align: center;
     }
 
     .footer h5 {
-        font-size: 1.1rem;
-        margin-bottom: 15px;
-        margin-top: 0;
+        display: none;
+    }
+
+    .footer-section-icon {
+        display: none;
+    }
+
+    .footer a {
+        display: inline-block;
+        text-align: center;
     }
 
     .footer-top {
         gap: 1.5rem !important;
+        flex-direction: column;
+    }
+
+    .footer-top > div {
+        text-align: center;
+    }
+
+    .footer-contact,
+    .footer-links {
+        text-align: center;
     }
 
     .footer-contact li,
     .footer-links li {
         margin-bottom: 8px;
         font-size: 0.9rem;
+        justify-content: center;
+        flex-direction: row;
     }
 
     .footer-contact li i,
     .footer-links li i {
         min-width: 20px;
+        margin-right: 8px;
+    }
+
+    .footer-social {
+        justify-content: center;
+        gap: 1.5rem !important;
     }
 
     .footer-social a {
         font-size: 1.5rem;
-    }
-
-    .footer-social {
-        margin-bottom: 15px;
+        color: #fff;
+        transition: color 0.3s;
     }
 
     .footer-top > div p {
         font-size: 0.9rem;
         margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .footer-top > div ul {
+        text-align: center;
+        padding: 0;
+        list-style: none;
+    }
+
+    .footer-top > div ul li a {
+        color: #fff;
     }
 
     .btn-lg {
         font-size: 0.95rem;
         padding: 0.75rem 1rem;
         width: 100% !important;
+        display: block;
+        text-align: center;
+    }
+
+    .footer-bottom {
+        text-align: center;
     }
 
     .footer-bottom p {
         font-size: 0.85rem;
         margin-bottom: 8px;
+        text-align: center;
+    }
+
+    .footer-terms {
+        color: #ccc;
+        text-align: center;
     }
 
     .footer-divider {
         margin: 20px 0;
+    }
+}
+
+/* Footer Desktop Optimization - Large screens */
+@media (min-width: 992px) {
+    .footer-top {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .footer-contact-col {
+        order: 5;
+        text-align: right;
+    }
+
+    .footer-contact-col .footer-section-icon {
+        left: 90%;
+        transform: translateY(-50%);
+    }
+
+    .footer-contact-col ul {
+        text-align: right;
+    }
+
+    .footer-contact-col li {
+        justify-content: flex-end;
     }
 }
 
@@ -919,6 +1018,27 @@ body > * {
     font-size: 0.95rem;
 }
 
+/* Column layout on desktop */
+@media (min-width: 992px) {
+    .about-us .row.g-4 {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .about-us .col-lg-6 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* Ensure service sections take full width */
+    .about-us .col-lg-6 > .about-service-section {
+        flex: 0 0 auto !important;
+        min-width: 100% !important;
+    }
+}
+
 /* Mosaic grid wrapper */
 .mosaic-grid {
     display: flex;
@@ -985,8 +1105,51 @@ body > * {
     border-radius: 12px;
     border: 1px solid rgba(122,75,217,0.08);
     box-shadow: 0 8px 24px rgba(122,75,217,0.04);
+    padding: 2rem 1.5rem;
+    min-height: auto;
+    height: auto;
 }
 .benefit-card i { color: #6a1b9a; }
+
+/* Service sections - separate content areas */
+.about-service-section {
+    display: block;
+    width: 100%;
+    flex: 0 0 100% !important;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-left: 4px solid #ad1457;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 8px rgba(122,75,217,0.06);
+    margin-bottom: 1.5rem;
+}
+
+.service-title {
+    color: #ad1457;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.about-closing-section {
+    color: #666;
+    font-style: italic;
+    padding-top: 1.5rem;
+}
+
+.about-closing-section p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Desktop: Make benefit cards display 3 per row */
+@media (min-width: 992px) {
+    .about-us .row.g-3 .col-md-4 {
+        flex: 0 0 calc(33.333% - 1rem) !important;
+        max-width: calc(33.333% - 1rem) !important;
+    }
+}
 
 /* CTA inside about */
 .about-cta {
@@ -1701,7 +1864,73 @@ img, video, iframe {
   .welcome-strip { padding: 40px 10px; background-size: 140px auto; }
   .welcome-strip h3 { font-size: 1.4rem; }
   .home-care-works .tile { padding: 18px; min-width: 0; }
-  .testimonial-card { padding: 30px 25px; }
+  
+  /* Testimonials Mobile Optimization */
+  .testimonials-section { padding: 60px 0; }
+  .section-header h2 { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .section-header .subtitle { font-size: 1rem; }
+  .section-intro { font-size: 0.95rem; max-width: 100%; }
+  
+  .testimonial-wrapper { 
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 40px;
+  }
+  
+  .testimonial-card { 
+    padding: 25px 18px;
+    border-radius: 15px;
+  }
+  
+  .quote-icon { 
+    font-size: 50px;
+    left: 15px;
+    top: -10px;
+  }
+  
+  .testimonial-text { 
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .testimonial-author { 
+    margin-top: 25px;
+    padding-top: 15px;
+  }
+  
+  .author-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 0.9rem;
+    margin-right: 12px;
+    border: 2px solid #fff;
+  }
+  
+  .testimonial-author h5 { 
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+  }
+  
+  .testimonial-author span { 
+    font-size: 0.8rem;
+  }
+  
+  .testimonial-rating {
+    bottom: 15px;
+    right: 15px;
+    gap: 2px;
+  }
+  
+  .testimonial-rating i { 
+    font-size: 0.85rem;
+  }
+  
+  .decoration-circle { 
+    width: 6px;
+    height: 6px;
+  }
+  
   .about-tile.large { height: 160px; }
   section { scroll-margin-top: 80px; }
   .navbar-custom .nav-links { flex-direction: column; gap: 12px; }
